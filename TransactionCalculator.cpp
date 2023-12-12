@@ -56,5 +56,35 @@ int main()
 	{
 		return 1;
 	}
-	
+
+
+	float ph = 0, mcd = 0, osko = 0, myki = 0, asg = 0, swin = 0;
+	for (auto& f : parts)
+	{
+		if (f[2].find("MICHAEL RENN") != string::npos)
+		{
+			ph += stof(f[4]);
+		}
+		else if	(f[2].find("McD Somerville") != string::npos)
+		{
+			mcd += stof(f[4]);
+		}
+		else if	(f[2].find("OSKO") != string::npos)
+		{
+			osko += stof(f[4]);
+		}
+		else if	(f[2].find("MYKI") != string::npos)
+		{
+			myki += stof(f[3]);
+		}
+		else if	(f[2].find("ASG") != string::npos)
+		{
+			asg += stof(f[4]);
+		}
+		else if	(f[2].find("PURCHASE Swinburne") != string::npos)
+		{
+			swin += stof(f[3]);
+		}
+
+	}
 }
