@@ -15,6 +15,11 @@ int CSVReader()
 	cout << "Please enter file path> ";
 	string path;
 	getline(cin, path);
+	if (path[0] == '\"' && path.back() == '\"')
+	{
+		path.pop_back();
+		path.erase(path.begin());
+	}
 	ifstream file(path);
 	if (!file)
 	{
