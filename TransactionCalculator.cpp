@@ -2,19 +2,59 @@
 //
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+vector<string[8]> parts;
+
+int CSVReader()
+{
+	cout << "Please enter file path> " << endl;
+	string path;
+	getline(cin, path);
+	ifstream file(path);
+	if (!file)
+	{
+		cout << "This is not a valid file path." << endl;
+		return 1;
+	}
+
+	string line;
+	getline(file, line);
+	if (line != "Bank Account,Date,Narrative,Debit Amount,Credit Amount,Balance,Categories,Serial")
+	{
+		cout << "File in wrong format" << endl;
+		return 1;
+	}
+
+	
+	const string DELIM = ",";
+	while (getline(file, line))
+	{
+		if (!line.empty())
+		{
+			string fields[8];
+			size_t pos = line.find(DELIM);
+			for (size_t i = 0; pos != string::npos && i < 8; i++)
+			{
+				fields[i] = line.substr(0, pos);
+				line.erase(0, pos + 1);
+				pos = line.find(DELIM);
+			}
+			parts.push_back(fields);
+		}
+	}
+}
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	int val = CSVReader();
+	if (val == 1)
+	{
+		return 1;
+	}
+	
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
