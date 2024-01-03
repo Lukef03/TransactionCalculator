@@ -1,12 +1,38 @@
-// TransactionCalculator.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 
 using namespace std;
+
+struct Date {
+	int day, month, year;
+	Month ToMonth() {
+		return Month{ month, year };
+	}
+};
+struct Month {
+	int month, year;
+};
+bool operator<(Date lhs, Date rhs) {
+	if (lhs.year < rhs.year) { return true; }
+	else if (lhs.year == rhs.year)
+	{
+		if (lhs.month < rhs.month)
+		{
+			return true;
+		}
+		else if (lhs.month == rhs.month)
+		{
+			if (lhs.day < rhs.day)
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
 
 vector<vector<string>> parts;
 
@@ -35,7 +61,7 @@ int CSVReader()
 		return 1;
 	}
 
-	
+
 	const string DELIM = ",";
 	while (getline(file, line))
 	{
@@ -62,15 +88,16 @@ int main()
 		return 1;
 	}
 
-
+	vector<vector<Date>> permonth;
 	float ph = 0, mcd = 0, pr = 0, myki = 0, asg = 0, swin = 0;
+	
 	for (auto& f : parts)
 	{
 		if (f[2].find("MICHAEL RENN") != string::npos)
 		{
 			ph += stof(f[4]);
 		}
-		else if	(f[2].find("McD Somerville") != string::npos)
+		else if (f[2].find("McD Somerville") != string::npos)
 		{
 			mcd += stof(f[4]);
 		}
@@ -78,15 +105,15 @@ int main()
 		{
 			pr += stof(f[4]);
 		}
-		else if	(f[2].find("MYKI") != string::npos)
+		else if (f[2].find("MYKI") != string::npos)
 		{
 			myki += stof(f[3]);
 		}
-		else if	(f[2].find("ASG") != string::npos)
+		else if (f[2].find("ASG") != string::npos)
 		{
 			asg += stof(f[4]);
 		}
-		else if	(f[2].find("PURCHASE Swinburne") != string::npos)
+		else if (f[2].find("PURCHASE Swinburne") != string::npos)
 		{
 			swin += stof(f[3]);
 		}
